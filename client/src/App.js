@@ -6,7 +6,6 @@ function App() {
   return (
     <div id="app">
       <Heading />
-
       <Footer />
     </div>
   );
