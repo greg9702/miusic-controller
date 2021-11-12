@@ -1,7 +1,6 @@
 #heading-box {
   background-color: black;
-  float: none;
-  height: 13%;
+  height: 10%;
   display: flex;
   align-items: center;
   width: 100%;
@@ -15,14 +14,4 @@
   color: red;
   display: flex;
   align-items: center;
-}
-
-.heading-button {
-  background-color: #04aa6d;
-  border-color: white;
-  height: 100%;
-  width: 100%;
-  margin: 5%;
-  font-size: 300%;
-  border-radius: 30px;
 }
