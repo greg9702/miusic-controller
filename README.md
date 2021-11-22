@@ -2,7 +2,7 @@
 
 ### __Overview 🔎__
 
-Main role of this project is to provide a access multi-access to music player running on local machine. As music players playing music from local files are passé, this project aims solve this issue for streaming services.
+Main role of this project is to provide a access multi-access to music player running on local machine. As music players playing music from local files are passé, this project aims to solve this problem for streaming services.
 
 ### __Architecutre 🌐__
 
