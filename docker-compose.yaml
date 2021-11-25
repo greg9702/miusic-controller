@@ -8,6 +8,9 @@ services:
       - /usr/app/node_modules
     ports:
       - 8000:8000
+    environment:
+      - CLIENT_ID="mandatory variable not set"
+      - CLIENT_SECRET="mandatory variable not set"
   redis:
     image: redis
     container_name: proxy-db
