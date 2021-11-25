@@ -1,28 +1,10 @@
 import express from "express";
 import { redisClient } from "../../../server";
 import { promisify } from "util";
+import axios from "axios";
+import { getToken } from "../../../spotify/client";
 
 export const helloApi = express.Router();
-
-helloApi.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    redisClient.get(id, (err, data) => {
-      if (err) {
-        console.error(err);
-        throw err;
-      }
-
-      if (data) {
-        res.status(200).json(data);
-      } else {
-        res.status(404).json({ id: id, message: "doesn't exist" });
-      }
-    });
-  } catch (err) {
-    res.status(500).send({ error: err.message });
-  }
-});
 
 helloApi.post("/", async (req, res) => {
   if (!req.body.key) {
@@ -47,4 +29,42 @@ helloApi.post("/", async (req, res) => {
     }
   });
   res.status(200).json({ key: key, message: "success" });
+});
+
+helloApi.get("/test_user", async (request, response) => {
+  try {
+    let token = getToken();
+    let testUser = await axios.get(
+      "https://api.spotify.com/v1/users/greg9702",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        json: true,
+      }
+    );
+    response.status(200).json({ message: testUser.data });
+  } catch (err) {
+    response.status(500).json({ error: "internal error" });
+  }
+});
+
+helloApi.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    redisClient.get(id, (err, data) => {
+      if (err) {
+        console.error(err);
+        throw err;
+      }
+
+      if (data) {
+        res.status(200).json(data);
+      } else {
+        res.status(404).json({ id: id, message: "doesn't exist" });
+      }
+    });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
 });
