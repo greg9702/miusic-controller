@@ -2,7 +2,7 @@ import express from "express";
 import { redisClient } from "../../../server";
 import { promisify } from "util";
 import axios from "axios";
-import { getToken } from "../../../spotify/client";
+import { getUser } from "../../../client/spotify";
 
 export const helloApi = express.Router();
 

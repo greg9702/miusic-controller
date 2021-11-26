@@ -15,7 +15,7 @@ export function refreshToken() {
         axios
             .post(
                 "https://accounts.spotify.com/api/token",
-                querystring.stringify({
+                new URLSearchParams({
                     grant_type: "client_credentials",
                 }),
                 {
@@ -32,8 +32,29 @@ export function refreshToken() {
             )
             .then((response) => {
                 token = response.data["access_token"];
+                console.log("Received new token:", token);
                 resolve(true);
             })
-            .catch((err) => reject(err));
+            .catch((err) => {
+                reject(err);
+            });
+    });
+}
+
+export function getUser(userName) {
+    return axios.get("https://api.spotify.com/v1/users/" + userName, {
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+        json: true,
+    });
+}
+
+export function searchForTrack(trackName) {
+    return axios.get("https://api.spotify.com/v1/users/" + userName, {
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+        json: true,
     });
 }
