@@ -34,7 +34,7 @@ helloApi.post("/", async (req, res) => {
 helloApi.get("/test_user", async (request, response) => {
   try {
     let token = getToken();
-    let testUser = await axios.get(
+    let userResp = await axios.get(
       "https://api.spotify.com/v1/users/greg9702",
       {
         headers: {
@@ -43,9 +43,14 @@ helloApi.get("/test_user", async (request, response) => {
         json: true,
       }
     );
-    response.status(200).json({ message: testUser.data });
+    let errMessage = "Unknown error";
+    if (userResp.data) {
+      errMessage = userResp.data;
+    }
+
+    response.status(userResp.status).json({ message: errMessage });
   } catch (err) {
-    response.status(500).json({ error: "internal error" });
+    response.status(500).json({ error: "internal error", message: err });
   }
 });
 
