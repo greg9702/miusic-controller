@@ -50,8 +50,12 @@ export function getUser(userName) {
     });
 }
 
-export function searchForTrack(trackName) {
-    return axios.get("https://api.spotify.com/v1/users/" + userName, {
+export function searchForTrack(searchQuery) {
+    return axios.get("https://api.spotify.com/v1/search", {
+        params: {
+            query: searchQuery,
+            type: "track",
+        },
         headers: {
             Authorization: "Bearer " + token,
         },
