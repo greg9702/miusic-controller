@@ -62,3 +62,12 @@ export function searchForTrack(searchQuery) {
         json: true,
     });
 }
+
+export function skipCurrentTrack() {
+    return axios.post("https://api.spotify.com/v1/me/player/next", null, {
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+        json: true,
+    });
+}

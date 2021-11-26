@@ -1,5 +1,9 @@
 import express from "express";
-import { getUser, searchForTrack } from "../../../../client/spotify";
+import {
+    getUser,
+    searchForTrack,
+    skipCurrentTrack,
+} from "../../../../client/spotify";
 
 export const spotifyApi = express.Router();
 
@@ -52,6 +56,23 @@ spotifyApi.get("/search", async (req, res) => {
             message = searchResp.data;
         }
         res.status(searchResp.status).json({ message: message });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "internal error", message: err });
+    }
+});
+
+spotifyApi.get("/skip", async (req, res) => {
+    try {
+        let skipResp = await skipCurrentTrack();
+        if (skipResp.status === 204) {
+            res.status(200).json({ message: "song skipped" });
+        }
+        let message = "Unknown error";
+        if (skipResp.data) {
+            message = skipResp.data;
+        }
+        res.status(skipResp.status).json({ message: message });
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "internal error", message: err });
