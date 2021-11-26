@@ -15,6 +15,19 @@ Architecture overview is presented on diagram below:
 - `backend` - main component responsible for communication with external APIs and storing API keys
 
 
+### __Requirements 🔧__
+- docker
+- docker-compose
+
+### __Setup ⚙️__
+#### __v1.0__
+- configure application in spotify dashboard _// TODO add instruction_
+- set client ID and client secret in `docker-compose.yaml`
+- run
+```
+docker-compose up --build
+```
+
 ### __Features 🚀__
 - access by multiple users at the same time
 - searching for song
@@ -22,4 +35,9 @@ Architecture overview is presented on diagram below:
 - skipping currently playing songs
 
 ### __Roadmap 🚗__
-> TODO
+#### __v1.0__
+- __spotify client integration__
+  - [ ] songs searching
+  - [ ] adding songs to playing queue
+  - [ ] skip currently playing song
+  - [ ] support display of queued songs stored in local queue
