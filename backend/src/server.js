@@ -10,24 +10,24 @@ const nodePort = 8000;
 const redisPort = 6379;
 
 export const redisClient = createClient({
-  host: "redis",
-  port: redisPort,
+    host: "redis",
+    port: redisPort,
 });
 
 axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const status = error.response ? error.response.status : null;
-    if (status === 401 && error.config && !error.config.__isRetryRequest) {
-      await refreshToken();
-      let token = getToken();
-      error.config.headers["Authorization"] = "Bearer " + token;
-      error.config.__isRetryRequest = true;
-      return axios(error.config);
-    } else {
-      throw "Max retries for token reached";
+    (response) => response,
+    async (error) => {
+        const status = error.response ? error.response.status : null;
+        if (status === 401 && error.config && !error.config.__isRetryRequest) {
+            await refreshToken();
+            let token = getToken();
+            error.config.headers["Authorization"] = "Bearer " + token;
+            error.config.__isRetryRequest = true;
+            return axios(error.config);
+        } else {
+            throw "Max retries for token reached";
+        }
     }
-  }
 );
 
 app.listen(nodePort, () => console.log(`Service running at port ${nodePort}`));
