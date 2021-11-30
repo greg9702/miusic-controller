@@ -37,7 +37,7 @@ docker-compose up --build
 ### __Roadmap 🚗__
 #### __v1.0__
 - __spotify client integration__
-  - [ ] change authentication mode as some endpoints are using user OAuth not client credentials
+  - [x] change authentication mode as some endpoints are using user OAuth not client credentials
   - [ ] songs searching
   - [ ] adding songs to playing queue
   - [ ] skip currently playing song
