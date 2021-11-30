@@ -16,8 +16,10 @@ Architecture overview is presented on diagram below:
 
 
 ### __Requirements 🔧__
+```
 - docker
 - docker-compose
+```
 
 ### __Setup ⚙️__
 #### __v1.0__
