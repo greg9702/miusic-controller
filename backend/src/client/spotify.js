@@ -124,3 +124,15 @@ export function skipCurrentTrack() {
         json: true,
     });
 }
+
+export function addTrackToPlayQueue(trackUri) {
+    return axios.post("https://api.spotify.com/v1/me/player/queue", null, {
+        params: {
+            uri: trackUri,
+        },
+        headers: {
+            Authorization: "Bearer " + accessToken,
+        },
+        json: true,
+    });
+}

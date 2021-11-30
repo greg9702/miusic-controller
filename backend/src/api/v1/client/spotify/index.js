@@ -3,6 +3,7 @@ import {
     getUser,
     searchForTrack,
     skipCurrentTrack,
+    addTrackToPlayQueue,
 } from "../../../../client/spotify";
 
 export const spotifyApi = express.Router();
@@ -46,6 +47,7 @@ spotifyApi.get("/search", async (req, res) => {
                 trackList.push({
                     artists: artists,
                     title: item.name,
+                    uri: item.uri,
                 });
             });
             res.status(200).json({ message: trackList });
@@ -62,7 +64,7 @@ spotifyApi.get("/search", async (req, res) => {
     }
 });
 
-spotifyApi.get("/skip", async (req, res) => {
+spotifyApi.post("/skip", async (req, res) => {
     try {
         let skipResp = await skipCurrentTrack();
         if (skipResp.status === 204) {
@@ -74,6 +76,29 @@ spotifyApi.get("/skip", async (req, res) => {
             message = skipResp.data;
         }
         res.status(skipResp.status).json({ message: message });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "internal error", message: err });
+    }
+});
+
+spotifyApi.post("/queue/add", async (req, res) => {
+    let trackUri = req.body.uri;
+    if (!trackUri) {
+        return res.status(403).json({ message: "uri missing in body request" });
+    }
+
+    try {
+        let addResp = await addTrackToPlayQueue(trackUri);
+        if (addResp.status === 204) {
+            res.status(200).json({ message: "song added" });
+            return;
+        }
+        let message = "Unknown error";
+        if (addResp.data) {
+            message = addResp.data;
+        }
+        res.status(addResp.status).json({ message: message });
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "internal error", message: err });
