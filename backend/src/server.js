@@ -18,7 +18,6 @@ axios.interceptors.response.use(
     (response) => response,
     async (error) => {
         const status = error.response ? error.response.status : null;
-
         if (status === 401 && error.config && !error.config.__isRetryRequest) {
             await refreshToken();
             let token = getToken();

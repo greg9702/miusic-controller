@@ -67,6 +67,7 @@ spotifyApi.get("/skip", async (req, res) => {
         let skipResp = await skipCurrentTrack();
         if (skipResp.status === 204) {
             res.status(200).json({ message: "song skipped" });
+            return;
         }
         let message = "Unknown error";
         if (skipResp.data) {
